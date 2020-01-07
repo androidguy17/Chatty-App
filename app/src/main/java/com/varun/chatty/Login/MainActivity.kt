@@ -1,12 +1,9 @@
-package com.varun.chatty
+package com.varun.chatty.Login
 
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,10 +14,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.varun.chatty.mesasges.LatestMessagesActivity
+import com.varun.chatty.R
+import com.varun.chatty.model.Users
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -43,7 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         etAlreadyhaveAccount.setOnClickListener{
 
-                    val intent =Intent(this,LoginActivity::class.java)
+                    val intent =Intent(this,
+                        LoginActivity::class.java)
                     startActivity(intent)
 
         }
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         if (auth!!.currentUser!=null){
 
-            val intent = Intent(this,LatestMessagesActivity::class.java)
+            val intent = Intent(this, LatestMessagesActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
@@ -155,9 +155,10 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode!=null && resultCode== Activity.RESULT_OK && data!=null){
+        if(requestCode==REQ_CODE && resultCode== Activity.RESULT_OK && data!=null){
        uri=data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+
 
             circleImageView2.setImageBitmap(bitmap)
             //circleImageView2.alpha=0f
@@ -166,6 +167,11 @@ class MainActivity : AppCompatActivity() {
             // val drawable = BitmapDrawable(bitmap)
            // buImage.setText(" ")
             //buImage.setBackgroundDrawable(drawable)
+          //  val baos = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.JPEG,25,baos)
+//            val picture = baos.toByteArray()
+
+
 
 
 
@@ -212,7 +218,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-                // ...
+
             }
 
 
@@ -225,7 +231,17 @@ class MainActivity : AppCompatActivity() {
         val ref = FirebaseStorage.getInstance().getReference("images/$filename")
 
 
-       val UploadTask = ref.putFile(uri!!)
+        val bitmap2 = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+
+        val baos = ByteArrayOutputStream()
+        bitmap2.compress(Bitmap.CompressFormat.JPEG,0,baos)
+        val picture = baos.toByteArray()
+
+
+
+
+
+        val UploadTask = ref.putBytes(picture)
 
         UploadTask.addOnFailureListener{
 
@@ -260,12 +276,18 @@ class MainActivity : AppCompatActivity() {
        val uid = auth!!.currentUser!!.uid
        var ref = FirebaseDatabase.getInstance().getReference("/Users/$uid")
 
-        var users = Users(uid!!,etusername.text.toString(),ProfileUrl)
+        var users =
+            Users(
+                uid!!,
+                etusername.text.toString(),
+                ProfileUrl
+            )
 
         ref.setValue(users)
             .addOnCompleteListener{
 
-                val intent = Intent(this,LatestMessagesActivity::class.java)
+                val intent = Intent(this,
+                    LatestMessagesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
 
@@ -274,5 +296,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-        class Users(val uid:String,val Username:String, val ProfileImageurl:String)
+
 }

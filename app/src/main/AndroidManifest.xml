@@ -14,15 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NewMessageActivity">
+        <activity android:name=".mesasges.ChatLog">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LatestMessagesActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".mesasges.LatestMessagesActivity" />
         </activity>
-        <activity android:name=".LatestMessagesActivity"/>
-
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".mesasges.NewMessageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".mesasges.LatestMessagesActivity" />
+        </activity>
+        <activity android:name=".mesasges.LatestMessagesActivity" />
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Login.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

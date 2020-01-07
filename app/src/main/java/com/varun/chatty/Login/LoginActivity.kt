@@ -1,4 +1,4 @@
-package com.varun.chatty
+package com.varun.chatty.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.varun.chatty.mesasges.LatestMessagesActivity
+import com.varun.chatty.R
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.etemail
 
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +41,8 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "Success",
                         Toast.LENGTH_SHORT).show()
 
-                    val intent = Intent(this,LatestMessagesActivity::class.java)
+                    val intent = Intent(this,
+                        LatestMessagesActivity::class.java)
                     intent.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
 
