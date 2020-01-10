@@ -21,6 +21,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_chat_log.*
+import kotlinx.android.synthetic.main.activity_latest_messages.*
 import kotlinx.android.synthetic.main.chat_from_ticket.view.*
 import kotlinx.android.synthetic.main.chat_to_ticket.view.*
 
@@ -93,6 +94,8 @@ class ChatLog : AppCompatActivity() {
 
 
                    }
+
+                   recyclerview_chatlog.scrollToPosition(adapter.itemCount - 1)
 
                }
 
