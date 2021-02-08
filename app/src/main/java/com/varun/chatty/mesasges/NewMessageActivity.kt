@@ -14,8 +14,9 @@ import com.varun.chatty.R
 import com.varun.chatty.model.Users
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.activity_new_message.*
+
+
 import kotlinx.android.synthetic.main.users_ticket.*
 import kotlinx.android.synthetic.main.users_ticket.view.*
 
@@ -87,21 +88,18 @@ class NewMessageActivity : AppCompatActivity() {
     }
 
 
-    class UserItem(val user: Users):Item(){
-        override fun bind(
-            viewHolder: com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder,
-            position: Int
-        ) {
+    class UserItem(val user: Users):com.xwray.groupie.Item<GroupieViewHolder>(){
 
-            viewHolder.itemView.textView2.text= user.Username
-
-                Picasso.get().load(user.ProfileImageurl).into(viewHolder.itemView.imageView2)
-
-
-        }
 
         override fun getLayout(): Int {
             return R.layout.users_ticket
+        }
+
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            viewHolder.itemView.textView2.text= user.Username
+
+            Picasso.get().load(user.ProfileImageurl).into(viewHolder.itemView.imageView2)
+
         }
 
 

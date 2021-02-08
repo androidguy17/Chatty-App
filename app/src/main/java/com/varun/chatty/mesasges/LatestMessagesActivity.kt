@@ -217,6 +217,7 @@ class LatestMessagesActivity : AppCompatActivity() {
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
+
                     chatPartnerUser = p0.getValue(Users::class.java)
 
                     viewHolder.itemView.etUserName.text = chatPartnerUser?.Username
